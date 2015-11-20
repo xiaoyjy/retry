@@ -1,0 +1,7 @@
+/.settings
+/.buildpath
+/.project
+/log
+/data
+/etc/backends.php
+/etc/server.php

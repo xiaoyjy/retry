@@ -1,0 +1,24 @@
+<?php
+
+define('CY_BPS_VERSION'    , '0.3.2');
+
+define("CY_SRV_MAX_REQUEST", 25000);
+define("CY_SRV_CLI_TIMEOUT", 500000); // 500ms
+
+$_ENV['server'] = ['http' => [], 'hb' => []];
+$_ENV['server']['http']['listen'] = 'tcp://0.0.0.0:8088';
+$_ENV['server']['http']['number'] = 128;
+$_ENV['server']['http']['worker'] = 'tcp';
+$_ENV['server']['http']['enable'] = 1;
+
+$_ENV['server']['hb']['listen'] = 'udp://0.0.0.0:20000';
+$_ENV['server']['hb']['number'] = 100;
+$_ENV['server']['hb']['worker'] = 'hb';
+$_ENV['server']['hb']['enable'] = 0;
+
+
+$_SERVER['HTTP_HOST'] = 'rmark.autonavi.com';
+
+$_ENV['config']['dead_lock_force_exit'] = true;
+
+?>

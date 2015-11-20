@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+define('CY_APP_PATH'       , dirname(__FILE__)   );
+define('CY_HOME'           , dirname(CY_APP_PATH));
+define('CY_LIB_PATH'       , CY_HOME.'/src'      );
+
+include CY_LIB_PATH.'/init.php';
+
+if(!file_exists(CY_HOME.'/etc/server.php'))
+{
+	exit("etc/server.php not found.\n");
+}
+
+include CY_HOME.'/etc/server.php';
+
+gc_enable();
+
+$main = new CY_Srv_Main();
+
+$o = getopt("c:");
+isset($o['c']) || $o['c'] = 'usage';
+
+$cmd = trim($o['c']);
+if(method_exists($main, $cmd))
+{
+	$main->$cmd();
+}
+
+?>

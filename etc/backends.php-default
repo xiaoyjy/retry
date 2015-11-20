@@ -1,0 +1,22 @@
+<?php
+
+$_ENV['config']['redis'] = array
+(
+ 'default' => array
+ (
+  [['127.0.0.1', 6379]],
+ )
+ );
+
+$_ENV['config']['db'] = array
+(
+ [
+  'host' => '10.144.160.210',
+  'port' => 3306,
+  'user' => 'test',
+  'password' => 'test',
+  'database' => 'test'
+  ]
+);
+
+?>

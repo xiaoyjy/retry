@@ -1,0 +1,69 @@
+#!/usr/bin/env php
+<?php
+
+define('CY_APP_PATH'       , dirname(__FILE__));
+define('CY_HOME'           , dirname(CY_APP_PATH));
+define('CY_LIB_PATH'       , CY_HOME.'/src');
+
+include CY_LIB_PATH.'/init.php';
+
+$o = getopt("c:i:s:t:k:");
+if(empty($o['c']))
+{
+	exit('Usage: '.$argv[0].' -c [dump|clear]');
+}
+
+$k = isset($o['k']) ? $o['k'] : 'i';
+$t = isset($o['t']) ? $o['t'] : '0';
+
+switch($o['c'])
+{
+	case 'dump':
+		call_user_func('cy_'.$k.'_reset', $t);
+
+		$next_func = 'cy_'.$k.'_next';
+		while($pair = $next_func($t))
+		{
+			list($key, $val) = each($pair);
+			echo $key, "\t", $val, "\n";
+		}
+
+		call_user_func('cy_'.$k.'_reset', $t);
+		break;
+
+	case 'clear':
+		call_user_func('cy_'.$k.'_drop', $t);
+		call_user_func('cy_'.$k.'_init', $t);
+		break;
+
+	case 'get':
+		isset($o['i']) || $o['i'] = 0;
+		
+		$method = 'cy_'.$k.'_get';
+		echo $method($o['i'], $t), "\n";
+		break;
+
+	case 'set':
+		isset($o['i']) || $o['i'] = 0;
+		isset($o['s']) || $o['s'] = 0;
+		if($o['i'])
+		{
+			$method = 'cy_'.$k.'_set';
+			echo $method($o['i'], $t, (int)$o['s']), "\n";
+		}
+		break;
+
+	case 'del':
+		isset($o['i']) || $o['i'] = 0;
+		$method = 'cy_'.$k.'_del';
+		echo $method($o['i'], $t), "\n";
+		break;
+
+	case 'info':
+		$method = 'cy_'.$k.'_info';
+		echo $method($t), "\n";
+		break;
+
+}
+
+?>
